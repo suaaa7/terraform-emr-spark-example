@@ -59,11 +59,9 @@ variable "zeppelin_port" {
   default = 8893
 }
 
-variable "trusted_networks" {
-  default = "0.0.0.0/0"
-}
-
 # A name for the cluster.  Most AWS resources created will contain this name for easy identification
 variable "cluster_name" {}
 
+# The VPC in which to create the EMR cluster, subnet IDs will be inferred.  See "Security Module" in the README
 variable "vpc_id" {}
+

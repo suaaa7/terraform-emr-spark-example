@@ -33,7 +33,7 @@ modules/
 ```
 
 ## Building
-Before building, ensure you're comfortable with [how terraform works](https://www.terraform.io/intro/index.html)
+Before building, ensure you're comfortable with [how terraform works](https://www.terraform.io/intro/index.html).
 
 ### Pre-Requisities
 Terraform will use the AWS credentials provided in your shell environment.  You

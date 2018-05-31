@@ -122,7 +122,7 @@ EOF
 }
 
 resource "aws_iam_role" "instance_role" {
-  name = "${var.cluster_name}-${terraform.env}-role"
+  name = "${var.cluster_name}-${terraform.env}-instance"
 
   assume_role_policy = <<EOF
 {
@@ -140,7 +140,7 @@ resource "aws_iam_role" "instance_role" {
 EOF
 }
 
-resource "aws_iam_instamce_profile" "instance_profile" {
+resource "aws_iam_instance_profile" "instance_profile" {
   name = "${var.cluster_name}-${terraform.env}"
   role = "${aws_iam_role.instance_role.id}"
 }

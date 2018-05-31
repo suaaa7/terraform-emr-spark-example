@@ -5,7 +5,7 @@ output "iam_service_role" {
 }
 
 output "iam_instance_profile" {
-  value = "${aws_iam_instamce_profile.instance_profile.id}"
+  value = "${aws_iam_instance_profile.instance_profile.id}"
 }
 
 output "iam_autoscaling_role" {

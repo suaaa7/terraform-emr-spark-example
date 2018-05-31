@@ -64,7 +64,7 @@ module "lb" {
   source = "./modules/lb"
 
   cluster_name      = "${var.cluster_name}"
-  vpc_id = "${var.vpc_id}"
+  vpc_id            = "${var.vpc_id}"
   subnet_ids        = "${module.sec.net_subnet_ids}"
   lb_security_group = "${module.sgs.lb_security_group}"
   zeppelin_port     = "${var.zeppelin_port}"

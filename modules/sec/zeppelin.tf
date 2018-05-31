@@ -70,6 +70,6 @@ resource "tls_self_signed_cert" "public_cert" {
 
 resource "aws_iam_server_certificate" "public_cert" {
   name             = "${var.cluster_name}-${var.region}"
-  certificate_body = "${tls_self_signed_cert.cert.cert_pem}"
+  certificate_body = "${tls_self_signed_cert.public_cert.cert_pem}"
   private_key      = "${tls_private_key.key.private_key_pem}"
 }

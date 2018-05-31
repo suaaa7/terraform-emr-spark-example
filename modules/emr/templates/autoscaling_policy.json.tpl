@@ -48,7 +48,7 @@
       }
     ],
     "Constraints": {
-      "MinCapacity": 1,
-      "MaxCapacity": 1
+      "MinCapacity": ${min_capacity},
+      "MaxCapacity": ${max_capacity}
     }
 }

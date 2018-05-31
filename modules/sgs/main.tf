@@ -66,6 +66,15 @@ resource "aws_security_group_rule" "lb_to_master" {
   security_group_id        = "${aws_security_group.master_security_group.id}"
 }
 
+resource "aws_security_group_rule" "ssh_to_master" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["${var.whitelist_ips}"]
+  security_group_id = "${aws_security_group.master_security_group.id}"
+}
+
 resource "aws_security_group_rule" "master_to_master" {
   type                     = "ingress"
   from_port                = 0
@@ -82,6 +91,15 @@ resource "aws_security_group_rule" "core_to_core" {
   protocol                 = "-1"
   source_security_group_id = "${aws_security_group.core_security_group.id}"
   security_group_id        = "${aws_security_group.core_security_group.id}"
+}
+
+resource "aws_security_group_rule" "ssh_to_core" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["${var.whitelist_ips}"]
+  security_group_id = "${aws_security_group.core_security_group.id}"
 }
 
 resource "aws_security_group_rule" "master_to_core" {

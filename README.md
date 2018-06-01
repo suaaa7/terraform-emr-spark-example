@@ -78,6 +78,11 @@ resource.
 The layout of this project is as follows:
 
 ```
+main.tf      --> The main terraform files, this includes the modules listed below
+config.tf    --> General Terraform configuration, versions, etc.
+variables.tf --> Variables needed for Terraform to execute, which also includes
+                 defaults
+outputs.tf   --> The output of the ELB's address for the Master Node
 modules/
     bootstrap/  
         --> This module copies files to S3 so EMR can run a script right after

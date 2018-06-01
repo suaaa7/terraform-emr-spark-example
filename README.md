@@ -258,5 +258,16 @@ It is recommended to use [Terraform Remote State](https://www.terraform.io/docs/
 
 # Author
 
-Christian Nuss, Collective Health SRE
+Christian Nuss
+
+Collective Health SRE
+
 https://github.com/cnuss
+
+## Copyright, License & Disclaimers
+
+Copyright 2018 Collective Health, Inc
+
+This project is available under the [ApacheV2][] License. Please see LICENSE file. 
+
+[ApacheV2]: https://www.apache.org/licenses/LICENSE-2.0.html

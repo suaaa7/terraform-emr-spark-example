@@ -1,5 +1,6 @@
 resource "random_string" "zeppelin_keystore_password" {
-  length = 16
+  length  = 16
+  special = false
 }
 
 resource "tls_private_key" "key" {

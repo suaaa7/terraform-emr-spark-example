@@ -64,4 +64,3 @@ variable "cluster_name" {}
 
 # The VPC in which to create the EMR cluster, subnet IDs will be inferred.  See "Security Module" in the README
 variable "vpc_id" {}
-

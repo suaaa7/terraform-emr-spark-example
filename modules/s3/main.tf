@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3_logs_bucket" {
-  bucket = "${var.cluster_name}-${var.region}-${terraform.env}-s3logs"
+  bucket = "${var.cluster_name}-${var.region}-${terraform.workspace}-s3logs"
   acl    = "log-delivery-write"
 
   versioning {
@@ -16,7 +16,7 @@ resource "aws_s3_bucket" "s3_logs_bucket" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-  bucket = "${var.cluster_name}-${var.region}-${terraform.env}"
+  bucket = "${var.cluster_name}-${var.region}-${terraform.workspace}"
   acl    = "private"
 
   logging {

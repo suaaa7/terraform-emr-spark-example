@@ -5,15 +5,15 @@ resource "tls_private_key" "ssh_private_key" {
 
 resource "local_file" "ssh_private_key" {
   content  = "${tls_private_key.ssh_private_key.private_key_pem}"
-  filename = "generated/ssh/${var.cluster_name}-${terraform.env}"
+  filename = "generated/ssh/${var.cluster_name}-${terraform.workspace}"
 }
 
 resource "local_file" "ssh_public_key" {
   content  = "${tls_private_key.ssh_private_key.public_key_openssh}"
-  filename = "generated/ssh/${var.cluster_name}-${terraform.env}.pub"
+  filename = "generated/ssh/${var.cluster_name}-${terraform.workspace}.pub"
 }
 
 resource "aws_key_pair" "key_pair" {
-  key_name   = "${var.cluster_name}-${terraform.env}"
+  key_name   = "${var.cluster_name}-${terraform.workspace}"
   public_key = "${tls_private_key.ssh_private_key.public_key_openssh}"
 }

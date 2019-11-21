@@ -3,7 +3,7 @@ data "aws_subnet" "subnet" {
 }
 
 resource "aws_security_group" "lb_security_group" {
-  name                   = "${var.cluster_name}-${terraform.env}-lb"
+  name                   = "${var.cluster_name}-${terraform.workspace}-lb"
   vpc_id                 = "${data.aws_subnet.subnet.vpc_id}"
   revoke_rules_on_delete = "true"
 
@@ -23,7 +23,7 @@ resource "aws_security_group" "lb_security_group" {
 }
 
 resource "aws_security_group" "master_security_group" {
-  name                   = "${var.cluster_name}-${terraform.env}-master"
+  name                   = "${var.cluster_name}-${terraform.workspace}-master"
   vpc_id                 = "${data.aws_subnet.subnet.vpc_id}"
   revoke_rules_on_delete = "true"
 
@@ -36,7 +36,7 @@ resource "aws_security_group" "master_security_group" {
 }
 
 resource "aws_security_group" "core_security_group" {
-  name                   = "${var.cluster_name}-${terraform.env}-core"
+  name                   = "${var.cluster_name}-${terraform.workspace}-core"
   vpc_id                 = "${data.aws_subnet.subnet.vpc_id}"
   revoke_rules_on_delete = "true"
 

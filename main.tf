@@ -3,14 +3,13 @@ module "sec" {
 
   cluster_name = "${var.cluster_name}"
   region       = "${var.region}"
-  vpc_id       = "${var.vpc_id}"
 }
 
 module "sgs" {
   source = "./modules/sgs"
 
   cluster_name         = "${var.cluster_name}"
-  subnet_ids           = "${module.sec.net_subnet_ids}"
+  vpc_id               = "${module.sec.vpc_id}"
   sns_source_addresses = "${var.sns_source_addresses}"
   zeppelin_port        = "${var.zeppelin_port}"
   whitelist_ips        = ["${module.sec.net_whitelist_ip}"]
@@ -42,7 +41,7 @@ module "emr" {
   release                    = "${var.emr_release}"
   s3_bucket                  = "${module.s3.bucket}"
   root_volume_size           = "${var.root_volume_size}"
-  subnet_id                  = "${module.sec.net_subnet_ids[0]}"
+  subnet_id                  = "${module.sec.subnet_ids[0]}"
   master_security_group      = "${module.sgs.master_security_group}"
   core_security_group        = "${module.sgs.core_security_group}"
   instance_profile           = "${module.sec.iam_instance_profile}"
@@ -64,8 +63,8 @@ module "lb" {
   source = "./modules/lb"
 
   cluster_name      = "${var.cluster_name}"
-  vpc_id            = "${var.vpc_id}"
-  subnet_ids        = "${module.sec.net_subnet_ids}"
+  vpc_id            = "${module.sec.vpc_id}"
+  subnet_ids        = ["${module.sec.subnet_ids}"]
   lb_security_group = "${module.sgs.lb_security_group}"
   zeppelin_port     = "${var.zeppelin_port}"
   master_id         = "${module.emr.master_id}"

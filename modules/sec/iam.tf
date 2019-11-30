@@ -1,16 +1,16 @@
 resource "aws_kms_key" "key" {
-  description = "${var.cluster_name}-${terraform.env}"
+  description = "${var.cluster_name}-${terraform.workspace}"
 }
 
 resource "aws_kms_grant" "grant" {
-  name              = "${var.cluster_name}-${terraform.env}"
+  name              = "${var.cluster_name}-${terraform.workspace}"
   key_id            = "${aws_kms_key.key.key_id}"
   grantee_principal = "${aws_iam_role.instance_role.arn}"
   operations        = ["Encrypt", "Decrypt", "ReEncryptFrom", "ReEncryptTo", "GenerateDataKey", "DescribeKey"]
 }
 
 resource "aws_iam_role" "service_role" {
-  name = "${var.cluster_name}-${terraform.env}-service"
+  name = "${var.cluster_name}-${terraform.workspace}-service"
 
   assume_role_policy = <<EOF
 {
@@ -30,7 +30,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "service_role_base" {
-  name = "${var.cluster_name}-${terraform.env}-service-base"
+  name = "${var.cluster_name}-${terraform.workspace}-service-base"
   role = "${aws_iam_role.service_role.id}"
 
   policy = <<EOF
@@ -122,7 +122,7 @@ EOF
 }
 
 resource "aws_iam_role" "instance_role" {
-  name = "${var.cluster_name}-${terraform.env}-instance"
+  name = "${var.cluster_name}-${terraform.workspace}-instance"
 
   assume_role_policy = <<EOF
 {
@@ -141,12 +141,12 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
-  name = "${var.cluster_name}-${terraform.env}"
+  name = "${var.cluster_name}-${terraform.workspace}"
   role = "${aws_iam_role.instance_role.id}"
 }
 
 resource "aws_iam_role_policy" "instance_profile_base" {
-  name = "${var.cluster_name}-${terraform.env}-service-base"
+  name = "${var.cluster_name}-${terraform.workspace}-service-base"
   role = "${aws_iam_role.instance_role.id}"
 
   policy = <<EOF
@@ -176,8 +176,8 @@ resource "aws_iam_role_policy" "instance_profile_base" {
             ],
             "Resource": [
                 "arn:aws:s3:::elasticmapreduce",
-                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.env}",
-                "arn:aws:s3:::${var.cluster_name}-bootstrap-${var.region}-${terraform.env}"
+                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.workspace}",
+                "arn:aws:s3:::${var.cluster_name}-bootstrap-${var.region}-${terraform.workspace}"
             ]
         },
         {
@@ -194,10 +194,10 @@ resource "aws_iam_role_policy" "instance_profile_base" {
             "Resource": [
                 "arn:aws:s3:::elasticmapreduce",
                 "arn:aws:s3:::elasticmapreduce/*",
-                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.env}",
-                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.env}/*",
-                "arn:aws:s3:::${var.cluster_name}-bootstrap-${var.region}-${terraform.env}",
-                "arn:aws:s3:::${var.cluster_name}-bootstrap-${var.region}-${terraform.env}/*"
+                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.workspace}",
+                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.workspace}/*",
+                "arn:aws:s3:::${var.cluster_name}-bootstrap-${var.region}-${terraform.workspace}",
+                "arn:aws:s3:::${var.cluster_name}-bootstrap-${var.region}-${terraform.workspace}/*"
             ]
         },
         {
@@ -206,7 +206,7 @@ resource "aws_iam_role_policy" "instance_profile_base" {
                 "s3:DeleteObject"
             ],
             "Resource": [
-                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.env}/logs/*"
+                "arn:aws:s3:::${var.cluster_name}-${var.region}-${terraform.workspace}/logs/*"
             ]
         },
         {
@@ -224,7 +224,7 @@ EOF
 }
 
 resource "aws_iam_role" "autoscaling_role" {
-  name = "${var.cluster_name}-${terraform.env}-autoscaling"
+  name = "${var.cluster_name}-${terraform.workspace}-autoscaling"
 
   assume_role_policy = <<EOF
 {
@@ -246,7 +246,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "autoscaling_base" {
-  name = "${var.cluster_name}-${terraform.env}-autoscaling-base"
+  name = "${var.cluster_name}-${terraform.workspace}-autoscaling-base"
   role = "${aws_iam_role.autoscaling_role.id}"
 
   policy = <<EOF

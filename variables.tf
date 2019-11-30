@@ -1,7 +1,7 @@
 # Region to build the EMR cluster in
 # If this is changed you MUST update emr_config_mangement_cidr_blocks
 variable "region" {
-  default = "us-west-2"
+  default = "ap-northeast-1"
 }
 
 # Note: These change from region-to-region.  See README for details.
@@ -9,24 +9,22 @@ variable "sns_source_addresses" {
   type = "list"
 
   default = [
-    "205.251.233.160/28",
-    "205.251.233.176/29",
-    "205.251.233.32/28",
-    "205.251.233.48/29",
-    "205.251.234.32/28",
-    "54.240.230.176/29",
-    "54.240.230.240/29",
+    "27.0.1.24/29",
+    "27.0.1.152/29",
+    "54.240.200.0/24",
+    "27.0.3.144/29",
+    "27.0.3.152/29",
   ]
 }
 
 # The Size of the Master
 variable "master_instance_type" {
-  default = "r4.xlarge"
+  default = "r3.xlarge"
 }
 
 # The Size of the Core Node
 variable "core_instance_type" {
-  default = "r4.xlarge"
+  default = "r3.xlarge"
 }
 
 # The initial number of instances to start
@@ -46,12 +44,12 @@ variable "emr_release" {
 
 # The size (in GB) where HDFS will store it's data
 variable "core_volume_size" {
-  default = 100
+  default = 10
 }
 
 # The size (in GB) the root filesystem will be
 variable "root_volume_size" {
-  default = 100
+  default = 10
 }
 
 # The port that Zeppelin runs on
@@ -61,6 +59,3 @@ variable "zeppelin_port" {
 
 # A name for the cluster.  Most AWS resources created will contain this name for easy identification
 variable "cluster_name" {}
-
-# The VPC in which to create the EMR cluster, subnet IDs will be inferred.  See "Security Module" in the README
-variable "vpc_id" {}

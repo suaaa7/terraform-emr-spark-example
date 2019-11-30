@@ -22,8 +22,12 @@ output "net_whitelist_ip" {
   value = ["${chomp(data.http.ip.body)}/32"]
 }
 
-output "net_subnet_ids" {
-  value = "${data.aws_subnet_ids.subnet_ids.ids}"
+output "vpc_id" {
+  value = "${aws_vpc.vpc.id}"
+}
+
+output "subnet_ids" {
+  value = ["${aws_subnet.public.*.id}"]
 }
 
 ## SSH Outputs ##

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "bootstrap" {
-  bucket = "${var.cluster_name}-bootstrap-${var.region}-${terraform.env}"
+  bucket = "${var.cluster_name}-bootstrap-${var.region}-${terraform.workspace}"
   acl    = "private"
 
   server_side_encryption_configuration {

@@ -1,8 +1,6 @@
 variable "cluster_name" {}
 
-variable "subnet_ids" {
-  type = "list"
-}
+variable "vpc_id" {}
 
 variable "sns_source_addresses" {
   type = "list"

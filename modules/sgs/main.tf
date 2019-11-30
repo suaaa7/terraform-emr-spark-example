@@ -1,10 +1,6 @@
-data "aws_subnet" "subnet" {
-  id = "${var.subnet_ids[0]}"
-}
-
 resource "aws_security_group" "lb_security_group" {
-  name                   = "${var.cluster_name}-${terraform.env}-lb"
-  vpc_id                 = "${data.aws_subnet.subnet.vpc_id}"
+  name                   = "${var.cluster_name}-${terraform.workspace}-lb"
+  vpc_id                 = "${var.vpc_id}"
   revoke_rules_on_delete = "true"
 
   ingress {
@@ -23,8 +19,8 @@ resource "aws_security_group" "lb_security_group" {
 }
 
 resource "aws_security_group" "master_security_group" {
-  name                   = "${var.cluster_name}-${terraform.env}-master"
-  vpc_id                 = "${data.aws_subnet.subnet.vpc_id}"
+  name                   = "${var.cluster_name}-${terraform.workspace}-master"
+  vpc_id                 = "${var.vpc_id}"
   revoke_rules_on_delete = "true"
 
   egress {
@@ -36,8 +32,8 @@ resource "aws_security_group" "master_security_group" {
 }
 
 resource "aws_security_group" "core_security_group" {
-  name                   = "${var.cluster_name}-${terraform.env}-core"
-  vpc_id                 = "${data.aws_subnet.subnet.vpc_id}"
+  name                   = "${var.cluster_name}-${terraform.workspace}-core"
+  vpc_id                 = "${var.vpc_id}"
   revoke_rules_on_delete = "true"
 
   egress {

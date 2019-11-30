@@ -1,12 +1,12 @@
 resource "aws_lb" "master_lb" {
-  name               = "${var.cluster_name}-${terraform.env}"
+  name               = "${var.cluster_name}-${terraform.workspace}"
   load_balancer_type = "application"
   security_groups    = ["${var.lb_security_group}"]
   subnets            = ["${var.subnet_ids}"]
 }
 
 resource "aws_lb_target_group" "zeppelin" {
-  name     = "${var.cluster_name}-zeppelin-${terraform.env}"
+  name     = "${var.cluster_name}-zeppelin-${terraform.workspace}"
   port     = "${var.zeppelin_port}"
   protocol = "HTTPS"
   vpc_id   = "${var.vpc_id}"

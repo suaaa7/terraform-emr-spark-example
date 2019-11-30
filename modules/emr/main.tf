@@ -18,7 +18,7 @@ data "template_file" "security_configuration" {
 }
 
 resource "aws_emr_security_configuration" "security_configuration" {
-  name = "${var.cluster_name}-${terraform.env}"
+  name = "${var.cluster_name}-${terraform.workspace}"
 
   configuration = "${data.template_file.security_configuration.rendered}"
 }
@@ -33,7 +33,7 @@ data "template_file" "autoscaling_policy" {
 }
 
 resource "aws_emr_cluster" "cluster" {
-  name          = "${var.cluster_name}-${terraform.env}"
+  name          = "${var.cluster_name}-${terraform.workspace}"
   release_label = "${var.release}"
   applications  = ["Spark", "Zeppelin", "Hadoop", "Ganglia"]
   log_uri       = "s3n://${var.s3_bucket}/logs/"
@@ -71,8 +71,8 @@ resource "aws_emr_cluster" "cluster" {
   }
 
   tags {
-    Name        = "${var.cluster_name}-${terraform.env}"
-    Environment = "${terraform.env}"
+    Name        = "${var.cluster_name}-${terraform.workspace}"
+    Environment = "${terraform.workspace}"
     Region      = "${var.region}"
   }
 

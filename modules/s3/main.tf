@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "bucket" {
   force_destroy = true
 
   logging {
-    target_bucket = "${aws_s3_bucket.s3_logs_bucket.id}"
+    target_bucket = aws_s3_bucket.s3_logs_bucket.id
   }
 
   versioning {

@@ -51,14 +51,12 @@ resource "aws_emr_cluster" "cluster" {
     key_name                          = var.ssh_key_name
   }
 
-  instance_group {
-    instance_role  = "MASTER"
+  master_instance_group {
     instance_type  = var.master_instance_type
     instance_count = 1
   }
 
-  instance_group {
-    instance_role  = "CORE"
+  core_instance_group {
     instance_type  = var.core_instance_type
     instance_count = var.core_instance_count_min
 

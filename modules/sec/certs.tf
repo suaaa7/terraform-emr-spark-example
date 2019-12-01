@@ -9,7 +9,7 @@ resource "tls_private_key" "key" {
 
 resource "tls_self_signed_cert" "cert" {
   key_algorithm         = "RSA"
-  private_key_pem       = "${tls_private_key.key.private_key_pem}"
+  private_key_pem       = tls_private_key.key.private_key_pem
   validity_period_hours = 87600
 
   allowed_uses = [
@@ -20,7 +20,7 @@ resource "tls_self_signed_cert" "cert" {
 
   dns_names = ["*.${var.region}.compute.internal"]
 
-  subject = {
+  subject {
     common_name  = "*.${var.region}.compute.internal"
     organization = "Company"
     province     = "State"
@@ -33,24 +33,24 @@ data "archive_file" "certs" {
   output_path = "${var.certs_path}/certs.zip"
 
   source {
-    content  = "${tls_private_key.key.private_key_pem}"
+    content  = tls_private_key.key.private_key_pem
     filename = "privateKey.pem"
   }
 
   source {
-    content  = "${tls_self_signed_cert.cert.cert_pem}"
+    content  = tls_self_signed_cert.cert.cert_pem
     filename = "certificateChain.pem"
   }
 
   source {
-    content  = "${tls_self_signed_cert.cert.cert_pem}"
+    content  = tls_self_signed_cert.cert.cert_pem
     filename = "trustedCertificates.pem"
   }
 }
 
 resource "tls_self_signed_cert" "public_cert" {
   key_algorithm         = "RSA"
-  private_key_pem       = "${tls_private_key.key.private_key_pem}"
+  private_key_pem       = tls_private_key.key.private_key_pem
   validity_period_hours = 87600
 
   allowed_uses = [
@@ -61,7 +61,7 @@ resource "tls_self_signed_cert" "public_cert" {
 
   dns_names = ["*.${var.region}.elb.amazonaws.com"]
 
-  subject = {
+  subject {
     common_name  = "*.${var.region}.elb.amazonaws.com"
     organization = "Company"
     province     = "State"
@@ -71,6 +71,6 @@ resource "tls_self_signed_cert" "public_cert" {
 
 resource "aws_iam_server_certificate" "public_cert" {
   name             = "${var.cluster_name}-${var.region}"
-  certificate_body = "${tls_self_signed_cert.public_cert.cert_pem}"
-  private_key      = "${tls_private_key.key.private_key_pem}"
+  certificate_body = tls_self_signed_cert.public_cert.cert_pem
+  private_key      = tls_private_key.key.private_key_pem
 }

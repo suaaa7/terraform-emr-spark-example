@@ -4,8 +4,8 @@ resource "aws_kms_key" "key" {
 
 resource "aws_kms_grant" "grant" {
   name              = "${var.cluster_name}-${terraform.workspace}"
-  key_id            = "${aws_kms_key.key.key_id}"
-  grantee_principal = "${aws_iam_role.instance_role.arn}"
+  key_id            = aws_kms_key.key.key_id
+  grantee_principal = aws_iam_role.instance_role.arn
   operations        = ["Encrypt", "Decrypt", "ReEncryptFrom", "ReEncryptTo", "GenerateDataKey", "DescribeKey"]
 }
 
@@ -27,11 +27,12 @@ resource "aws_iam_role" "service_role" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy" "service_role_base" {
   name = "${var.cluster_name}-${terraform.workspace}-service-base"
-  role = "${aws_iam_role.service_role.id}"
+  role = aws_iam_role.service_role.id
 
   policy = <<EOF
 {
@@ -119,6 +120,7 @@ resource "aws_iam_role_policy" "service_role_base" {
     ]
 }
 EOF
+
 }
 
 resource "aws_iam_role" "instance_role" {
@@ -138,16 +140,17 @@ resource "aws_iam_role" "instance_role" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
   name = "${var.cluster_name}-${terraform.workspace}"
-  role = "${aws_iam_role.instance_role.id}"
+  role = aws_iam_role.instance_role.id
 }
 
 resource "aws_iam_role_policy" "instance_profile_base" {
   name = "${var.cluster_name}-${terraform.workspace}-service-base"
-  role = "${aws_iam_role.instance_role.id}"
+  role = aws_iam_role.instance_role.id
 
   policy = <<EOF
 {
@@ -221,6 +224,7 @@ resource "aws_iam_role_policy" "instance_profile_base" {
     ]
 }
 EOF
+
 }
 
 resource "aws_iam_role" "autoscaling_role" {
@@ -243,11 +247,12 @@ resource "aws_iam_role" "autoscaling_role" {
   ]
 }
 EOF
+
 }
 
 resource "aws_iam_role_policy" "autoscaling_base" {
   name = "${var.cluster_name}-${terraform.workspace}-autoscaling-base"
-  role = "${aws_iam_role.autoscaling_role.id}"
+  role = aws_iam_role.autoscaling_role.id
 
   policy = <<EOF
 {
@@ -265,4 +270,5 @@ resource "aws_iam_role_policy" "autoscaling_base" {
     ]
 }
 EOF
+
 }

@@ -6,8 +6,11 @@ variable "certs_path" {
   default = "/tmp"
 }
 
-variable "cluster_name" {}
-variable "region" {}
+variable "cluster_name" {
+}
+
+variable "region" {
+}
 
 variable "subnet_count" {
   default = 2

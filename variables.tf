@@ -6,7 +6,7 @@ variable "region" {
 
 # Note: These change from region-to-region.  See README for details.
 variable "sns_source_addresses" {
-  type = "list"
+  type = list(string)
 
   default = [
     "27.0.1.24/29",
@@ -58,4 +58,5 @@ variable "zeppelin_port" {
 }
 
 # A name for the cluster.  Most AWS resources created will contain this name for easy identification
-variable "cluster_name" {}
+variable "cluster_name" {
+}

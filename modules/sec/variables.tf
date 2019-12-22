@@ -1,5 +1,5 @@
 variable "ip_lookup_url" {
-  default = "http://ifconfig.co"
+  default = "https://ipv4.icanhazip.com"
 }
 
 variable "certs_path" {

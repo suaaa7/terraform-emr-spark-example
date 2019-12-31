@@ -39,7 +39,7 @@ variable "core_instance_count_max" {
 
 # The EMR release, see: https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-release-5x.html
 variable "emr_release" {
-  default = "emr-5.13.0"
+  default = "emr-5.27.0"
 }
 
 # The size (in GB) where HDFS will store it's data
